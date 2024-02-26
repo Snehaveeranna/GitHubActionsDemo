@@ -22,7 +22,7 @@ jobs:
           mv apidog_output.json apidog_report.json || true  # Rename the output to match the expected name, ignoring errors if the file doesn't exist
           mkdir -p .github/Reports  # Create the Reports folder if it doesn't exist
           if [ -f apidog_report.json ]; then  # Check if the file exists before moving it
-            mv apidog_report.json .github/Reports/apidog_report.json  # Move the report to the Reports folder
+            mv apidog_report.json .github/Reports  # Move the report to the Reports folder
           fi
 
       - name: Archive JSON report as artifact
