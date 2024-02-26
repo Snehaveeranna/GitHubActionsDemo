@@ -19,12 +19,13 @@ jobs:
       - name: Running Test Scenario
         run: |
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
-          mv *.json apidog_report.json || true  # Rename the generated JSON report to apidog_report.json, ignoring errors if no file is found
-          mkdir -p .github/Reports  # Create the Reports folder if it doesn't exist
-          if [ -f apidog_report.json ]; then  # Check if the file exists before moving it
+          report_file=$(find . -maxdepth 1 -name '*.json' -print -quit)  # Find the JSON report file
+          if [ -n "$report_file" ]; then  # Check if a JSON report file was found
+            mv "$report_file" apidog_report.json  # Rename the JSON report file to apidog_report.json
+            mkdir -p .github/Reports  # Create the Reports folder if it doesn't exist
             mv apidog_report.json .github/Reports/apidog_report.json  # Move the report to the Reports folder
           else
-            echo "ERROR: apidog_report.json not found!"
+            echo "ERROR: JSON report file not found!"
             exit 1
           fi
 
