@@ -18,16 +18,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Run APIdog tests and generate JSON report
-        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
-      
+      - name: Run APIdog tests and generate HTML report
+        run: |
+          curl -o testArtifacts/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV" && \
+          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
       - name: Output the results
         uses: actions/upload-artifact@v3
         with: 
           name: Reports
           path: testArtifacts
-      
-      - name: Send email with JSON report
+      - name: Send email with HTML report
         run: node sendEmail.js
         env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+                SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
