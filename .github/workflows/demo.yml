@@ -33,7 +33,3 @@ jobs:
         with:
           name: apidog_report
           path: .github/Reports/apidog_report.json
-        uses: actions/upload-artifact@v2
-        with:
-          name: apidog_report
-          path: .github/Reports/apidog_report.json
