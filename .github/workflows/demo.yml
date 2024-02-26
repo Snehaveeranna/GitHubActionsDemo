@@ -19,8 +19,7 @@ jobs:
         with:
           node-version: '14'
       - name: Run APIdog tests and generate JSON report
-        run: |
-          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
+        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
       
       - name: Output the results
         uses: actions/upload-artifact@v3
