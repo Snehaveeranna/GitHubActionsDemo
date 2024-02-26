@@ -32,6 +32,3 @@ jobs:
         with:
           name: apidog_report
           path: .github/Reports/apidog_report.json
-        with:
-          name: apidog_report
-          path: .github/Reports/apidog_report.json
