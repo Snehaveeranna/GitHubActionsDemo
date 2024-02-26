@@ -2,7 +2,7 @@ const fs = require('fs');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const msg = {
-  to: 'nandakumarap@anthology.com', // Change this to the recipient's email address
+  to: 'snehav@anthology.com', // Change this to the recipient's email address
   from: 'ivpnotifications@products.anthology.com', // Change this to your verified sender email in SendGrid
   subject: 'APIdog Test Report',
   text: 'APIdog test report is attached.',
