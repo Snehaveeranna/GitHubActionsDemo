@@ -19,6 +19,7 @@ jobs:
       - name: Running Test Scenario
         run: |
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
+          sleep 5  # Wait for 5 seconds to ensure the file is fully generated
           mkdir -p .github/Reports  # Create the Reports folder if it doesn't exist
           if [ -f apidog_report.json ]; then  # Check if the file exists before moving it
             mv apidog_report.json .github/Reports/apidog_report.json  # Move the report to the Reports folder
@@ -28,6 +29,10 @@ jobs:
           fi
 
       - name: Archive JSON report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apidog_report
+          path: .github/Reports/apidog_report.json
         uses: actions/upload-artifact@v2
         with:
           name: apidog_report
