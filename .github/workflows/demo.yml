@@ -17,9 +17,12 @@ jobs:
         run: npm install -g apidog-cli
   
       - name: Running Test Scenario
-        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r html,cli
+        run: |
+          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
+          mv apidog_report.json $GITHUB_WORKSPACE/apidog_report.json
+
       - name: Archive JSON report as artifact
         uses: actions/upload-artifact@v2
         with:
           name: apidog_report
-          path: .github/Reports/apidog_report.json
+          path: apidog_report.json
