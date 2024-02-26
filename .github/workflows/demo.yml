@@ -1,4 +1,4 @@
-name: hello-world
+name: Automated API Tests
 on: push
 jobs:
   my-job:
@@ -6,3 +6,15 @@ jobs:
     steps:
       - name: my-step
         run: echo "Hello World!"
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+  
+      - name: Install Apidog CLI
+        run: npm install -g apidog-cli
+  
+      - name: Running Test Scenario
+        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r html,cli
