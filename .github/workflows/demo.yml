@@ -31,24 +31,21 @@ jobs:
           apidog run \
             https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=$APIDOG_TOKEN \
             -r html
-      - name: Verify and move HTML report (if found)
+      - name: Get current directory (for debugging)
+        run: pwd
+
+      - name: Verify and upload HTML report (if found)
         run: |
           if [ -f "apidog_report.html" ]; then
             echo "HTML report found"
-            mv apidog_report.html .github/Reports/
+            # Create directory if it doesn't exist
+            mkdir -p .github/Reports/
+            mv apidog_report.html .github/Reports/  # Move to the created directory
           fi
+          # Upload the report to artifacts (if it exists in the new location)
+          test -f ".github/Reports/apidog_report.html" && \
+            actions/upload-artifact@v3 -n Reports -p ".github/Reports/"
 
-      - name: Move HTML report (if it exists)
-        run: |
-          if [ -f "apidog_report.html" ]; then
-            mv apidog_report.html .github/Reports/
-          fi
-      
-      - name: Output the results (downloaded report)
-        uses: actions/upload-artifact@v3
-        with:
-          name: Reports
-          path: apidog_report.html
 
       - name: Send email with HTML report
         run: node sendEmail.js
