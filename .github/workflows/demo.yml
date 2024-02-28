@@ -1,8 +1,5 @@
 name: Run APIdog Tests and Send Email
 on: workflow_dispatch
-  # push:
-  #   branches:
-  #     - main  # Trigger the workflow on pushes to the main branch
 jobs:
   test_and_send_email:
     runs-on: ubuntu-latest
@@ -12,7 +9,7 @@ jobs:
       - name: Install SendGrid library
         run: npm install @sendgrid/mail
       - name: Create testArtifacts directory
-        run: mkdir TestArtifacts
+        run: mkdir -p TestArtifacts
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
