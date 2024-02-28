@@ -33,7 +33,7 @@ jobs:
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
 
           # Move the generated report to the correct location
-          mv generated_report.html .github/My\ reports/apidog_report.html
+          mv apidog_report.html .github/My\ reports/apidog_report.html
 
       - name: Send email with HTML report
         run: node sendEmail.js
