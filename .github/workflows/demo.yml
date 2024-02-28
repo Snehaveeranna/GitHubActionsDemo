@@ -25,14 +25,20 @@ jobs:
         run: mkdir -p testArtifacts
 
       - name: Run APIdog tests and generate HTML report
+        env:
+          APIDOG_TOKEN: ${{ secrets.APIDOG_TOKEN }}  # Access token from secret
         run: |
-          # Download the APIdog report
-          curl -o testArtifacts/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
-          
-          # Generate the report using APIdog (replace with your actual command)
-          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -o apidog_report.html -r cli
-      - name: Check generated report format
-        run: file apidog_report.html
+          apidog run \
+            https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=$APIDOG_TOKEN \
+            -r html,cli
+      - name: Check for HTML report
+        run: ls | grep -q "apidog_report.html" && echo "HTML report found" || echo "HTML report not found"
+
+      - name: Move HTML report (if it exists)
+        run: |
+          if [ -f "apidog_report.html" ]; then
+            mv apidog_report.html .github/Reports/
+          fi
       
       - name: Output the results (downloaded report)
         uses: actions/upload-artifact@v3
