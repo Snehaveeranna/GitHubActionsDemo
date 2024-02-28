@@ -20,20 +20,23 @@ jobs:
 
       - name: Install APIdog CLI
         run: npm install -g apidog-cli
+        
+      - name: Create testArtifacts directory (if needed)
+        run: mkdir -p testArtifacts
 
       - name: Run APIdog tests and generate HTML report
         run: |
           # Download the APIdog report
-          curl -o .github/Reports/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
+          curl -o testArtifacts/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
           
           # Generate the report using APIdog (replace with your actual command)
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
 
-      - name: Check for report file in testArtifacts
-        run: |
-          if [ -f "testArtifacts/apidog_report.html" ]; then
-            mv testArtifacts/apidog_report.html .github/Reports/
-          fi
+      - name: Output the results (downloaded report)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Reports
+          path: testArtifacts
 
       - name: Send email with HTML report
         run: node sendEmail.js
