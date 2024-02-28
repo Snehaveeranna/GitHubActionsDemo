@@ -11,7 +11,10 @@ jobs:
         run: npm install @sendgrid/mail
 
       - name: Create My reports directory
-        run: mkdir -p .github/My\ reports
+        run: |
+            mkdir -p .github/My\ reports
+            ls -l .github
+
 
       - name: Install Node.js
         uses: actions/setup-node@v2
