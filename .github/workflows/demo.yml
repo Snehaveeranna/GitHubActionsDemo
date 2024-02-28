@@ -1,8 +1,11 @@
 name: Run APIdog Tests and Send Email
-on: workflow_dispatch
+on:
+  workflow_dispatch
+
 jobs:
   test_and_send_email:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -11,10 +14,7 @@ jobs:
         run: npm install @sendgrid/mail
 
       - name: Create My reports directory
-        run: |
-            mkdir -p .github/My\ reports
-            ls -l .github
-
+        run: mkdir -p .github/My\ reports
 
       - name: Install Node.js
         uses: actions/setup-node@v2
@@ -26,8 +26,14 @@ jobs:
 
       - name: Run APIdog tests and generate HTML report
         run: |
-          curl -o .github/My\ reports/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV" && \
+          # Download the APIdog report
+          curl -o .github/My\ reports/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
+          
+          # Generate the report using APIdog (replace with your actual command)
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
+
+          # Move the generated report to the correct location
+          mv generated_report.html .github/My\ reports/apidog_report.html
 
       - name: Send email with HTML report
         run: node sendEmail.js
