@@ -8,8 +8,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install SendGrid library
         run: npm install @sendgrid/mail
-      - name: Create testArtifacts directory
-        run: mkdir -p TestArtifacts
+      - name: Create My reports directory
+        run: mkdir -p "My reports"
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
@@ -18,9 +18,9 @@ jobs:
         run: npm install -g apidog-cli
       - name: Run APIdog tests and generate HTML report
         run: |
-          curl -o TestArtifacts/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV" && \
+          curl -o "My reports/apidog_report.html" "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV" && \
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
       - name: Send email with HTML report
         run: node sendEmail.js
         env:
-                SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
