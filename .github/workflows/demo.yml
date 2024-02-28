@@ -31,7 +31,9 @@ jobs:
           
           # Generate the report using APIdog (replace with your actual command)
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
-
+      - name: Check generated report format
+        run: file apidog_report.html
+      
       - name: Output the results (downloaded report)
         uses: actions/upload-artifact@v3
         with:
