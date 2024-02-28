@@ -30,9 +30,13 @@ jobs:
         run: |
           apidog run \
             https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=$APIDOG_TOKEN \
-            -r html,cli
-      - name: Check for HTML report
-        run: ls | grep -q "apidog_report.html" && echo "HTML report found" || echo "HTML report not found"
+            -r html
+      - name: Verify and move HTML report (if found)
+        run: |
+          if [ -f "apidog_report.html" ]; then
+            echo "HTML report found"
+            mv apidog_report.html .github/Reports/
+          fi
 
       - name: Move HTML report (if it exists)
         run: |
