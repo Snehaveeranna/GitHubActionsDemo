@@ -1,53 +1,21 @@
-name: Run APIdog Tests and Send Email
-on:
-  workflow_dispatch
+name: Automated API Tests
+
+on: [push, pull_request]
 
 jobs:
-  test_and_send_email:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Install SendGrid library
-        run: npm install @sendgrid/mail
-        
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-      - name: Install APIdog CLI
-        run: npm install -g apidog-cli
-        
-      - name: Create testArtifacts directory (if needed)
-        run: mkdir -p testArtifacts
+    - name: Install Apidog CLI
+      run: npm install -g apidog-cli
 
-      - name: Run APIdog tests and generate HTML report
-        env:
-          APIDOG_TOKEN: ${{ secrets.APIDOG_TOKEN }}  # Access token from secret
-        run: |
-          apidog run \
-            https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=$APIDOG_TOKEN \
-            -r html
-      - name: Get current directory (for debugging)
-        run: pwd
-
-      - name: Verify and upload HTML report (if found)
-        run: |
-          if [ -f "apidog_report.html" ]; then
-            echo "HTML report found"
-            # Create directory if it doesn't exist
-            mkdir -p .github/Reports/
-            mv apidog_report.html .github/Reports/  # Move to the created directory
-          fi
-          # Upload the report to artifacts (if it exists in the new location)
-          test -f ".github/Reports/apidog_report.html" && \
-            actions/upload-artifact@v3 -n Reports -p ".github/Reports/"
-
-
-      - name: Send email with HTML report
-        run: node sendEmail.js
-        env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+    - name: Running Test Scenario
+      run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r html,cli
