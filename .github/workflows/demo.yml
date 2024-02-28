@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Reports
-          path: testArtifacts
+          path: apidog_report.html
 
       - name: Send email with HTML report
         run: node sendEmail.js
