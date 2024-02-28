@@ -12,10 +12,7 @@ jobs:
 
       - name: Install SendGrid library
         run: npm install @sendgrid/mail
-
-      - name: Create My reports directory
-        run: mkdir -m 755 -p .github/MyReports
-
+        
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
@@ -27,13 +24,13 @@ jobs:
       - name: Run APIdog tests and generate HTML report
         run: |
           # Download the APIdog report
-          curl -o .github/MyReports/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
+          curl -o .github/Reports/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
           
           # Generate the report using APIdog (replace with your actual command)
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
 
           # Move the generated report to the correct location
-          mv apidog_report.html .github/MyReports/
+          mv apidog_report.html .github/Reports/
 
       - name: Send email with HTML report
         run: node sendEmail.js
