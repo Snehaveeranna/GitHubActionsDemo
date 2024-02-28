@@ -30,7 +30,7 @@ jobs:
           curl -o testArtifacts/apidog_report.html "https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV"
           
           # Generate the report using APIdog (replace with your actual command)
-          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
+          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -o apidog_report.html -r cli
       - name: Check generated report format
         run: file apidog_report.html
       
