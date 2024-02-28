@@ -29,16 +29,10 @@ jobs:
           # Generate the report using APIdog (replace with your actual command)
           apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r cli
 
-      - name: Check for report file
-        run: ls
-
-      - name: Get current directory (for debugging)
-        run: pwd
-
-      - name: Move report (if it exists)
+      - name: Check for report file in testArtifacts
         run: |
-          if [ -f "apidog_report.html" ]; then
-            mv apidog_report.html .github/Reports/
+          if [ -f "testArtifacts/apidog_report.html" ]; then
+            mv testArtifacts/apidog_report.html .github/Reports/
           fi
 
       - name: Send email with HTML report
