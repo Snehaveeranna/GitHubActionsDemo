@@ -24,3 +24,7 @@ jobs:
       with:
         name: reports
         path: ${{ github.workspace }}/apidog-reports/**/*
+    - name: Send email with HTML report
+      run: node sendEmail.js
+      env:
+                SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
