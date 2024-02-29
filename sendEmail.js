@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// Construct the path to the directory where artifacts are stored
 const artifactsDirectory = path.join(process.env.GITHUB_WORKSPACE, 'apidog-reports');
 
 // Read the contents of the directory
@@ -21,9 +21,6 @@ if (reportFile) {
 } else {
     console.error('No report file found.');
 }
-
-// Read the HTML file
-//const htmlReport = fs.readFileSync(reportPath, 'utf-8');
 const msg = {
   to: 'snehav@anthology.com', // Change this to the recipient's email address
   from: 'ivpnotifications@products.anthology.com', // Change this to your verified sender email in SendGrid
