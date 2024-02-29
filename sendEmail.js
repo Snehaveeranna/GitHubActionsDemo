@@ -29,7 +29,7 @@ sgMail
     console.log('Email sent successfully');
   })
   .catch((error) => {
-    console.error('Error occurred while sending email:', error);
+    console.error('Error occurred while sending email:', error.response?.body || error.message);
   });
 } else {
     console.error('No report file found.');
