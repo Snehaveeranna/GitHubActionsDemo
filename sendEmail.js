@@ -8,7 +8,7 @@ const reportFile = files.find(file => file.startsWith('apidog-report-'));
 if (reportFile) {
     // Construct the path to the HTML file
     const reportPath = path.join(artifactsDirectory, reportFile);
-    const htmlReport = fs.readFileSync('testArtifacts/apidog_report.html', 'utf-8');
+    const htmlReport = fs.readFileSync(reportPath, 'utf-8');
     const msg = {
       to: 'snehav@anthology.com', // Change this to the recipient's email address
       from: 'ivpnotifications@products.anthology.com', // Change this to your verified sender email in SendGrid
