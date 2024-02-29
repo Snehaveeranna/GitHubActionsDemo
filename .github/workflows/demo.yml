@@ -19,3 +19,8 @@ jobs:
 
     - name: Running Test Scenario
       run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r html,cli
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: reports
+        path: ${{ github.workspace }}/apidog-reports/**/*
