@@ -1,5 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const sgMail = require('@sendgrid/mail');
+
+// Set SendGrid API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Construct the path to the directory where artifacts are stored
 const artifactsDirectory = path.join(process.env.GITHUB_WORKSPACE, 'apidog-reports');
