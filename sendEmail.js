@@ -20,7 +20,9 @@ if (reportFile) {
 
     // Read the HTML file
     const htmlReport = fs.readFileSync(reportPath, 'utf-8');
-
+    
+    const base64Content = Buffer.from(htmlReport).toString('base64');
+    
     // Construct the email message
     const msg = {
       to: 'snehav@anthology.com', // Change this to the recipient's email address
@@ -29,7 +31,7 @@ if (reportFile) {
       text: 'APIdog test report is attached.',
       attachments: [
         {
-          content: htmlReport,
+          content: base64Content,
           filename: 'apidog_report.html',
           type: 'text/html',
           disposition: 'attachment',
