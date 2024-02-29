@@ -1,18 +1,28 @@
 const fs = require('fs');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-//const htmlReport = fs.readFileSync('${{ github.workspace }}/apidog-reports/', 'utf-8');
-const now = new Date();
-const timestamp = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}-${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}-${now.getMilliseconds().toString().padStart(3, '0')}`;
+const artifactsDirectory = path.join(process.env.GITHUB_WORKSPACE, 'apidog-reports');
 
-// Construct the dynamic file name
-const fileName = `apidog-report-${timestamp}-0.html`; // Assuming sequence is always 0, change it accordingly if needed
+// Read the contents of the directory
+const files = fs.readdirSync(artifactsDirectory);
 
-// Construct the path to the HTML file using github.workspace
-const reportPath = path.join(process.env.GITHUB_WORKSPACE, 'apidog-reports', fileName);
+// Find the file with the name starting with "apidog-report-"
+const reportFile = files.find(file => file.startsWith('apidog-report-'));
+
+if (reportFile) {
+    // Construct the path to the HTML file
+    const reportPath = path.join(artifactsDirectory, reportFile);
+
+    // Read the HTML file
+    const htmlReport = fs.readFileSync(reportPath, 'utf-8');
+
+    // Now you can use htmlReport as needed
+} else {
+    console.error('No report file found.');
+}
 
 // Read the HTML file
-const htmlReport = fs.readFileSync(reportPath, 'utf-8');
+//const htmlReport = fs.readFileSync(reportPath, 'utf-8');
 const msg = {
   to: 'snehav@anthology.com', // Change this to the recipient's email address
   from: 'ivpnotifications@products.anthology.com', // Change this to your verified sender email in SendGrid
