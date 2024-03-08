@@ -22,8 +22,7 @@ jobs:
 
       - name: Run APIdog tests and generate JSON report
         run: |
-          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json > temp-report.json
-          mv temp-report.json apidog-report.json
+          run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json,cli
 
       - name: Generate Newman HTML report
         run: newman run apidog-report.json -r html
