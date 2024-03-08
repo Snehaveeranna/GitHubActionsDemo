@@ -16,16 +16,16 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '16' # Upgrade Node.js to version 16 or higher
 
       - name: Install APIdog CLI
         run: npm install -g apidog-cli
 
-      - name: Install Newman locally
-        run: npm install newman
+      - name: Install Newman and HTML reporter
+        run: npm install -g newman newman-reporter-html
 
       - name: Run APIdog tests and generate HTML report
-        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
+        run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json,cli
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
