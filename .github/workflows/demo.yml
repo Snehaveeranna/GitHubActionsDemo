@@ -35,5 +35,12 @@ jobs:
 
       - name: Send email with HTML report
         run: node sendEmail.js
+        id: send-email
         env:
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+
+      - name: Archive Newman HTML report
+        uses: actions/upload-artifact@v2
+        with:
+          name: newman-report
+          path: ${{ steps.send-email.outputs.artifact_path }}
