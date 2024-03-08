@@ -19,7 +19,7 @@ jobs:
         run: npm install -g apidog-cli
       - name: Run APIdog tests and generate HTML report
         run: |
-          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json
+          apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json | tee apidog-reports/apidog-report.json
 
       - name: Upload Newman HTML report
         uses: actions/upload-artifact@v3
