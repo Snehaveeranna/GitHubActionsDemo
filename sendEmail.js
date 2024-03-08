@@ -45,6 +45,11 @@ if (reportFile) {
         .send(msg)
         .then(() => {
             console.log('Email sent successfully');
+            // Upload Newman HTML report as an artifact
+            const artifactName = 'newman-report.html';
+            fs.writeFileSync(artifactName, htmlReport); // Write HTML report to file
+            console.log(`Newman HTML report saved as ${artifactName}`);
+            console.log(`::set-output name=artifact_path::${artifactName}`); // Set output for further use in workflow
         })
         .catch((error) => {
             console.error('Error occurred while sending email:', error.response?.body || error.message);
