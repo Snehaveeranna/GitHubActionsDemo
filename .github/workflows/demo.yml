@@ -26,14 +26,7 @@ jobs:
       - name: Print Apidog report content
         run: cat apidog-report.json
 
-      - name: Check Apidog report
-        run: |
-          if [ ! -s "apidog-report.json" ]; then
-          echo "Apidog report is empty or does not exist"
-          exit 1
-          fi
-
-      - name: Generate Newman report
+      - name: Run Newman to generate HTML report
         run: newman run apidog-report.json -r html
 
       - name: Upload Newman HTML report
