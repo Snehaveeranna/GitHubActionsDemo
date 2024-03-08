@@ -17,6 +17,10 @@ jobs:
           node-version: '20'
       - name: Install APIdog CLI
         run: npm install -g apidog-cli
+
+      - name: Install Newman
+        run: npm install -g newman
+        
       - name: Create apidog-reports directory
         run: mkdir -p apidog-reports
 
