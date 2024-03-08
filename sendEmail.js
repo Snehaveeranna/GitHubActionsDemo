@@ -21,9 +21,6 @@ if (reportFile) {
     // Read the HTML report
     const htmlReport = fs.readFileSync(htmlReportPath, 'utf-8');
 
-    // Encode the HTML report content as base64
-    const base64Content = Buffer.from(htmlReport).toString('base64');
-
     // Construct the email message
     const msg = {
         to: 'snehav@anthology.com', // Change this to the recipient's email address
@@ -32,7 +29,7 @@ if (reportFile) {
         text: 'APIdog test report is attached.',
         attachments: [
             {
-                content: base64Content,
+                content: htmlReport, // Use raw HTML content
                 filename: 'apidog_report.html',
                 type: 'text/html',
                 disposition: 'attachment',
@@ -45,11 +42,6 @@ if (reportFile) {
         .send(msg)
         .then(() => {
             console.log('Email sent successfully');
-            // Upload Newman HTML report as an artifact
-            const artifactName = 'newman-report.html';
-            fs.writeFileSync(artifactName, htmlReport); // Write HTML report to file
-            console.log(`Newman HTML report saved as ${artifactName}`);
-            console.log(`::set-output name=artifact_path::${artifactName}`); // Set output for further use in workflow
         })
         .catch((error) => {
             console.error('Error occurred while sending email:', error.response?.body || error.message);
