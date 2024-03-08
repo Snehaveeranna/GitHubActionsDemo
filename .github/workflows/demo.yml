@@ -33,6 +33,14 @@ jobs:
         with:
           name: newman-report
           path: newman
+      - name: Generate Newman HTML report
+        run: newman run ${{ github.workspace }}/apidog-reports/apidog-report-* -r html
+
+      - name: Upload Newman HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: newman-report
+          path: newman
       - name: Send email with HTML report
         run: node sendEmail.js
         env:
