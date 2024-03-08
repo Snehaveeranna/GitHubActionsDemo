@@ -24,22 +24,11 @@ jobs:
         run: |
           run: apidog run https://api.apidog.com/api/v1/projects/469204/api-test/ci-config/349543/detail?token=xdGMPHHcIsP80b1GLkpfHV -r json,cli
 
-      - name: Generate Newman HTML report
-        run: newman run apidog-report.json -r html
-
-      - name: Upload Newman HTML report
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: newman-report
-          path: newman
-      - name: Generate Newman HTML report
-        run: newman run ${{ github.workspace }}/apidog-reports/apidog-report-* -r html
-
-      - name: Upload Newman HTML report
-        uses: actions/upload-artifact@v3
-        with:
-          name: newman-report
-          path: newman
+          name: reports
+          path: ${{ github.workspace }}/apidog-reports/
       - name: Send email with HTML report
         run: node sendEmail.js
         env:
