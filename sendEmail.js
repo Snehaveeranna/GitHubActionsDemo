@@ -19,8 +19,8 @@ if (reportFile) {
     const jsonReportPath = path.join(artifactsDirectory, reportFile);
 
     // Construct the command to run Newman
-    const newmanCommand = `newman run ${jsonReportPath} --reporters cli,html --reporter-html-export newman-report.html`;
-
+    const newmanCommand = `newman run ${jsonReportPath} --reporters cli,htmlextra --reporter-htmlextra-export newman-report.html`;
+    
     // Run Newman command
     const { execSync } = require('child_process');
     try {
