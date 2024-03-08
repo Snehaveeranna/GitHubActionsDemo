@@ -25,9 +25,10 @@ jobs:
 
       - name: Check Apidog report
         run: |
+          cat apidog-report.json
           if [ ! -s "apidog-report.json" ]; then
-            echo "Apidog report is empty or does not exist"
-            exit 1
+          echo "Apidog report is empty or does not exist"
+          exit 1
           fi
 
       - name: Generate Newman report
