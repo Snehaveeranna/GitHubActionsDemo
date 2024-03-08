@@ -18,8 +18,9 @@ jobs:
       - name: Install APIdog CLI
         run: npm install -g apidog-cli
 
-      - name: Install Newman
-        run: npm install -g newman
+      - name: Install Newman and htmlextra reporter
+        run: |
+          npm install -g newman newman-reporter-htmlextra
         
       - name: Create apidog-reports directory
         run: mkdir -p apidog-reports
