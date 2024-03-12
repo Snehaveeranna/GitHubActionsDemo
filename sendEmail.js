@@ -23,6 +23,8 @@ if (reportFile) {
     const newmanCommand = `newman run ${jsonReportPath} --reporters cli,htmlextra --reporter-htmlextra-export newman-report.html`;
 
     try {
+
+        console.log('Executing command:', newmanCommand);
         // Execute Newman command to generate HTML Extra report
         execSync(newmanCommand, { stdio: 'inherit' });
         console.log('Newman HTML Extra report generated successfully.');
