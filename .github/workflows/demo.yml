@@ -22,7 +22,7 @@ jobs:
         run: npm install -g apidog-cli
 
       - name: Install Newman and HTML reporter
-        run: npm install -g newman newman-reporter-htmlextra
+        run: npm install -g newman newman-reporter-html
 
       - name: Run APIdog tests and generate HTML report
         run: apidog run https://api.apidog.com/api/v1/projects/455055/api-test/ci-config/349701/detail?token=xcEULUNaxgnauOxzw3wbgB -r json
